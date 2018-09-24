@@ -12,6 +12,8 @@ export class DashboardComponent implements OnInit {
     public sliders: Array<any> = [];
 
     constructor() {
+      console.log("---------USERINFO-----------");
+      console.log(localStorage.getItem('userInfo'));
         this.sliders.push(
             {
                 imagePath: 'assets/images/slider1.jpg',

@@ -9,9 +9,11 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
+    user_fullName:string='';
 
     constructor(private translate: TranslateService, public router: Router) {
-
+        let userInfoObj=JSON.parse(localStorage.getItem('userInfo'));
+        this.user_fullName=userInfoObj.firstName+' '+userInfoObj.lastName;
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();

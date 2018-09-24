@@ -17,4 +17,11 @@ export class ApiService {
     console.log("in: register");
     return  this.httpClient.post<any>(`${this.API_URL}/api/notification/registration`,registrationForm,httpOptions);
   }
+
+  login(loginForm:any){
+    console.log(`in: Login: payload: ${loginForm}`);
+
+    return  this.httpClient.post<any>(`${this.API_URL}/api/notification/signin`,loginForm,httpOptions);
+  }
+
 }
