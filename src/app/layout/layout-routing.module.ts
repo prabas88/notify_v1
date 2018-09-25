@@ -9,7 +9,8 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
             { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
-            { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' } 
+            { path: 'blank-page', loadChildren: './blank-page/blank-page.module#BlankPageModule' },
+            { path: 'send-notifications', loadChildren: './send-notifications/send-notifications.module#SendNotificationsModule' } 
         ]
     }
 ];
