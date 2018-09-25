@@ -24,7 +24,7 @@ export class ApiService {
   }
 
   getDomainDetails(requestObj:any){
-    console.log(`in: getDomainDetails: sessionObj: ${requestObj}`);
+    console.log(`in: getDomainDetails: sessionObj: `);
     let _httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -32,8 +32,12 @@ export class ApiService {
         'x-access-token':requestObj
       })
     };
-    console.log(_httpOptions)
     return  this.httpClient.post<any>(`${this.API_URL}/api/notification/getDomains`,null,_httpOptions);
+  }
+
+  getActiveSubscribersCount(requestObj:any){
+    console.log("in: getActiveSubscribersCount");
+    return  this.httpClient.post<any>(`${this.API_URL}/api/notification/getActiveSubscribersCount`,requestObj,httpOptions);
   }
 
 }

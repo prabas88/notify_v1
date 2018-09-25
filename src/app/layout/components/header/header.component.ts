@@ -27,11 +27,9 @@ export class HeaderComponent implements OnInit {
         };
         if(!localStorage.getItem('currentDomain')){
           this.currentDomain=userInfoObj.domains[0].name;
-          console.log("@@@@@@@@"+this.currentDomain);
           localStorage.setItem('currentDomain',JSON.stringify(userInfoObj.domains[0]));
         }else{
           let currentDomainObj=localStorage.getItem('currentDomain');
-          console.log("@@@@@@@@"+currentDomainObj);
           let _currentDomainObj=JSON.parse(currentDomainObj);
           this.currentDomain=_currentDomainObj.name;
         }

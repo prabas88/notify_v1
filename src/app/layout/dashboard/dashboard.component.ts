@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../../router.animations';
-
+import { ApiService } from '../../api.service';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -10,54 +10,24 @@ import { routerTransition } from '../../router.animations';
 export class DashboardComponent implements OnInit {
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
+    activeUserRequest:any={};
+    activeSubscribersCount:any;
 
-    constructor() {
-      console.log("---------USERINFO-----------");
-      console.log(localStorage.getItem('userInfo'));
-        this.sliders.push(
-            {
-                imagePath: 'assets/images/slider1.jpg',
-                label: 'First slide label',
-                text:
-                    'Nulla vitae elit libero, a pharetra augue mollis interdum.'
-            },
-            {
-                imagePath: 'assets/images/slider2.jpg',
-                label: 'Second slide label',
-                text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-            },
-            {
-                imagePath: 'assets/images/slider3.jpg',
-                label: 'Third slide label',
-                text:
-                    'Praesent commodo cursus magna, vel scelerisque nisl consectetur.'
-            }
-        );
 
-        this.alerts.push(
-            {
-                id: 1,
-                type: 'success',
-                message: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Voluptates est animi quibusdam praesentium quam, et perspiciatis,
-                consectetur velit culpa molestias dignissimos
-                voluptatum veritatis quod aliquam! Rerum placeat necessitatibus, vitae dolorum`
-            },
-            {
-                id: 2,
-                type: 'warning',
-                message: `Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Voluptates est animi quibusdam praesentium quam, et perspiciatis,
-                consectetur velit culpa molestias dignissimos
-                voluptatum veritatis quod aliquam! Rerum placeat necessitatibus, vitae dolorum`
-            }
-        );
+    constructor(private apiService:ApiService) {
+      let userInfoObj=JSON.parse(localStorage.getItem('userInfo'));
+      let currentDomain=JSON.parse(localStorage.getItem('currentDomain'));
+      this.activeUserRequest.userId=userInfoObj._id;
+      this.activeUserRequest.domain=currentDomain.name;
+      this.getActiveSubscribesCount()
     }
 
     ngOnInit() {}
 
-    public closeAlert(alert: any) {
-        const index: number = this.alerts.indexOf(alert);
-        this.alerts.splice(index, 1);
+    getActiveSubscribesCount(){
+      this.apiService.getActiveSubscribersCount(JSON.stringify(this.activeUserRequest)).subscribe((responseObj:  any) => {
+        this.activeSubscribersCount=responseObj.payload.activeUsers;
+      });
     }
+
 }
