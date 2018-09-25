@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../../api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgbModal,ModalDismissReasons,NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss']
+    styleUrls: ['./header.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
@@ -15,9 +17,10 @@ export class HeaderComponent implements OnInit {
     currentDomain:string='';
     userDomains: any[];
     domainForm: FormGroup;
+  closeResult: string;
 
     constructor(private translate: TranslateService, public router: Router,private apiService:ApiService,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,private modalService: NgbModal,public activeModal: NgbActiveModal) {
         let userInfoObj=JSON.parse(localStorage.getItem('userInfo'));
         let domainSessionObj={
           userId:userInfoObj._id
@@ -80,4 +83,23 @@ export class HeaderComponent implements OnInit {
     changeLang(language: string) {
         this.translate.use(language);
     }
+
+  open(content) {
+    this.modalService.open(content).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+
 }

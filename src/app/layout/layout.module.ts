@@ -7,7 +7,7 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
-
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
     imports: [
         CommonModule,
@@ -15,8 +15,10 @@ import { HeaderComponent } from './components/header/header.component';
         TranslateModule,
         NgbDropdownModule.forRoot(),
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+      NgbModule.forRoot()
     ],
-    declarations: [LayoutComponent, SidebarComponent, HeaderComponent]
+    declarations: [LayoutComponent, SidebarComponent, HeaderComponent],
+  providers: [NgbActiveModal],
 })
 export class LayoutModule {}

@@ -1,9 +1,5 @@
 <nav class="navbar navbar-expand-lg fixed-top">
-    <a class="navbar-brand" href="#">SB Admin Angular5 BS4 </a>
-    <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
-        <!-- <span class="navbar-toggler-icon"></span> -->
-        <i class="fa fa-bars text-muted" aria-hidden="true"></i>
-    </button>
+
     <div class="collapse navbar-collapse">
         <form class="form-inline my-2 my-lg-0" [formGroup]="domainForm">
           <ul class="navbar-nav ml-auto">
@@ -15,13 +11,35 @@
 
               </select>
             </li>
-            <li class="nav-item" ngbDropdown>
-              <button class="btn btn-primary" type="submit">+ Add Website</button>
-            </li>
+
             </ul>
 
-
         </form>
+      <button class="btn btn-primary" (click)="open(content)">+ Add Website</button>
+      <ng-template #content let-c="close" let-d="dismiss">
+        <form >
+        <div class="modal-header">
+          <h4 class="modal-title">Add Website</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="col">
+              <select ><option value="0">http://</option><option value="1">https://</option></select>
+            </div>
+            <div class="col">
+              <input type="text" class="form-control"  />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" (click)="open(content)">Generate Code</button>
+          <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        </div>
+          </form>
+      </ng-template>
         <ul class="navbar-nav ml-auto">
 
 
