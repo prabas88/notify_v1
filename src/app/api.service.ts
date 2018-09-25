@@ -20,8 +20,20 @@ export class ApiService {
 
   login(loginForm:any){
     console.log(`in: Login: payload: ${loginForm}`);
-
     return  this.httpClient.post<any>(`${this.API_URL}/api/notification/signin`,loginForm,httpOptions);
+  }
+
+  getDomainDetails(requestObj:any){
+    console.log(`in: getDomainDetails: sessionObj: ${requestObj}`);
+    let _httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Accept': 'application/json',
+        'x-access-token':requestObj
+      })
+    };
+    console.log(_httpOptions)
+    return  this.httpClient.post<any>(`${this.API_URL}/api/notification/getDomains`,null,_httpOptions);
   }
 
 }
