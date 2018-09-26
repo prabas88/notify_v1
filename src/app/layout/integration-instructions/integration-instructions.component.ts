@@ -7,9 +7,12 @@ import { routerTransition } from '../../router.animations';
   animations: [routerTransition()]
 })
 export class IntegrationInstructionsComponent implements OnInit {
-  scriptfile:any="https://cdn.izooto.com/scripts/6e2a15d3337aa67106f8d8d9dcb136b10154d41c.js";
+  scriptfile:any="";
   constructor() {
-    console.log("calling con...")
+    console.log("calling IntegrationInstructionsComponent...");
+    let currentDomain=JSON.parse(localStorage.getItem('currentDomain'));
+    this.scriptfile=currentDomain.jsFile;
+
   }
 
   ngOnInit() {
