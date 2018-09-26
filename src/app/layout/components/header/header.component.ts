@@ -14,32 +14,34 @@ import { NgbModal,ModalDismissReasons,NgbActiveModal } from '@ng-bootstrap/ng-bo
 export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
     user_fullName:string='';
-    currentDomain:string='';
+    currentDomain:any;
     userDomains: any[];
-    domainForm: FormGroup;
-  closeResult: string;
+    addNewDomainForm: FormGroup;
+    closeResult: string;
+    newDomainsubmitted = false;
+    domainSessionObj:any={};
+    userInfoObj:any;
 
     constructor(private translate: TranslateService, public router: Router,private apiService:ApiService,
-                private formBuilder: FormBuilder,private modalService: NgbModal,public activeModal: NgbActiveModal) {
-        let userInfoObj=JSON.parse(localStorage.getItem('userInfo'));
-        let domainSessionObj={
-          userId:userInfoObj._id
+                private formBuilder: FormBuilder,private modalService: NgbModal) {
+        this.userInfoObj=JSON.parse(localStorage.getItem('userInfo'));
+        this.domainSessionObj={
+          userId:this.userInfoObj._id
         };
         if(!localStorage.getItem('currentDomain')){
-          this.currentDomain=userInfoObj.domains[0].name;
-          localStorage.setItem('currentDomain',JSON.stringify(userInfoObj.domains[0]));
+          this.currentDomain=this.userInfoObj.domains[0].name;
+          localStorage.setItem('currentDomain',this.currentDomain);
         }else{
           let currentDomainObj=localStorage.getItem('currentDomain');
-          let _currentDomainObj=JSON.parse(currentDomainObj);
-          this.currentDomain=_currentDomainObj.name;
+          this.currentDomain=currentDomainObj
         }
-        this.domainForm = this.formBuilder.group({
-          domainListBox: [this.currentDomain]
-        });
-        this.apiService.getDomainDetails(JSON.stringify(domainSessionObj)).subscribe((domains:  any) => {
-          this.userDomains=domains;
-        });
-        this.user_fullName=userInfoObj.firstName+' '+userInfoObj.lastName;
+
+      this.addNewDomainForm = this.formBuilder.group({
+        type: ["0"],
+        domainName: ["",[Validators.required]]
+      });
+        this.loadDomainsList();
+        this.user_fullName=this.userInfoObj.firstName+' '+this.userInfoObj.lastName;
         this.translate.addLangs(['en', 'fr', 'ur', 'es', 'it', 'fa', 'de', 'zh-CHS']);
         this.translate.setDefaultLang('en');
         const browserLang = this.translate.getBrowserLang();
@@ -56,8 +58,14 @@ export class HeaderComponent implements OnInit {
         });
 
     }
+  loadDomainsList(){
+      this.apiService.getDomainDetails(JSON.stringify(this.domainSessionObj)).subscribe((domains:  any) => {
+        this.userDomains=domains;
+      });
+    }
+    ngOnInit() {
 
-    ngOnInit() {}
+    }
 
     isToggled(): boolean {
         const dom: Element = document.querySelector('body');
@@ -69,11 +77,6 @@ export class HeaderComponent implements OnInit {
         dom.classList.toggle(this.pushRightClass);
     }
 
-    rltAndLtr() {
-        const dom: any = document.querySelector('body');
-        dom.classList.toggle('rtl');
-    }
-
     onLoggedout() {
         localStorage.clear();
     }
@@ -82,7 +85,8 @@ export class HeaderComponent implements OnInit {
         this.translate.use(language);
     }
 
-  open(content) {
+  openDomainCreateForm(content) {
+    this.addNewDomainForm.reset({ type: '0' ,domainName:''});
     this.modalService.open(content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -99,5 +103,25 @@ export class HeaderComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
+  submitNewDomainForm(){
+    console.log("In:submitNewDomainForm");
+    this.newDomainsubmitted = true;
+    if (this.addNewDomainForm.invalid) {
+      return;
+    }
+    let addDomainRequest={};
+    addDomainRequest['userId']=this.userInfoObj._id;
+    addDomainRequest['payload']=this.addNewDomainForm.value;
+    this.apiService.addNewDomain(JSON.stringify(addDomainRequest)).subscribe((domains:  any) => {
+      this.loadDomainsList();
+    });
+  }
+  get new_domain_form() { return this.addNewDomainForm.controls; }
 
+  onChangeDomain(selectDomainObj){
+    console.log("In:onChangeDomain");
+    localStorage.setItem('currentDomain',selectDomainObj);
+    this.router.navigate(["dashboard"]);
+    window.location.reload();
+  }
 }

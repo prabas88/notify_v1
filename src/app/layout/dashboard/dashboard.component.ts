@@ -8,23 +8,26 @@ import { ApiService } from '../../api.service';
     animations: [routerTransition()]
 })
 export class DashboardComponent implements OnInit {
-    public alerts: Array<any> = [];
-    public sliders: Array<any> = [];
     activeUserRequest:any={};
     activeSubscribersCount:any;
 
 
     constructor(private apiService:ApiService) {
+      console.log("loading dashboard!!")
       let userInfoObj=JSON.parse(localStorage.getItem('userInfo'));
-      let currentDomain=JSON.parse(localStorage.getItem('currentDomain'));
+      let currentDomain=localStorage.getItem('currentDomain');
       this.activeUserRequest.userId=userInfoObj._id;
-      this.activeUserRequest.domain=currentDomain.name;
-      this.getActiveSubscribesCount()
+      this.activeUserRequest.domain=currentDomain;
+      console.log(`current domain: ${currentDomain}`);
+      this.getActiveSubscribesCount();
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+      console.log("DashboardComponent")
+    }
 
     getActiveSubscribesCount(){
+      console.log("getActiveSubscribesCount")
       this.apiService.getActiveSubscribersCount(JSON.stringify(this.activeUserRequest)).subscribe((responseObj:  any) => {
         this.activeSubscribersCount=responseObj.payload.activeUsers;
       });

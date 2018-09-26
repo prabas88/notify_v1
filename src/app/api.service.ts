@@ -40,4 +40,9 @@ export class ApiService {
     return  this.httpClient.post<any>(`${this.API_URL}/api/notification/getActiveSubscribersCount`,requestObj,httpOptions);
   }
 
+  addNewDomain(domainForm:any){
+    console.log("in: addNewDomain");
+    return  this.httpClient.post<any>(`${this.API_URL}/api/notification/addDomains`,domainForm,httpOptions);
+  }
+
 }

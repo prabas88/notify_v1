@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./blank-page.component.scss']
 })
 export class BlankPageComponent implements OnInit {
-    constructor() {}
+    constructor() {
+      console.log("loading BlankPageComponent constructor...!")
+    }
 
     ngOnInit() {}
 }
