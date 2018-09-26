@@ -15,10 +15,10 @@ export class DashboardComponent implements OnInit {
     constructor(private apiService:ApiService) {
       console.log("loading dashboard!!")
       let userInfoObj=JSON.parse(localStorage.getItem('userInfo'));
-      let currentDomain=localStorage.getItem('currentDomain');
+      let currentDomain=JSON.parse(localStorage.getItem('currentDomain'));
       this.activeUserRequest.userId=userInfoObj._id;
-      this.activeUserRequest.domain=currentDomain;
-      console.log(`current domain: ${currentDomain}`);
+      this.activeUserRequest.domain=currentDomain.name;
+      console.log(`current domain: ${currentDomain.name}`);
       this.getActiveSubscribesCount();
     }
 

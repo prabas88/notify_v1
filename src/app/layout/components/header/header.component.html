@@ -4,9 +4,10 @@
 
           <ul class="navbar-nav ml-auto">
             <li class="nav-item" ngbDropdown>
-              <select class="custom-select mr-sm-2" id="domainListBox" [(ngModel)]="currentDomain" (ngModelChange)="onChangeDomain($event)">
-                <option *ngFor="let domain of userDomains" [ngValue]="domain.name" > {{domain.name}} </option>
+              <select class="custom-select mr-sm-2"  [(ngModel)]="currentDomain" (ngModelChange)="onChangeDomain($event)">
+                <option *ngFor="let domain of userDomains" [ngValue]="domain" > {{domain.name}} </option>
               </select>
+
             </li>
             </ul>
 
@@ -29,11 +30,20 @@
             </div>
           </div>
         </div>
+          <div class="form-row">
+            <p *ngIf="isNewDomainAdded">
+              <ngb-alert [dismissible]="false" [type]="'success'">
+                Successfully Add new website!!
+              </ngb-alert>
+            </p>
+          </div>
         <div class="modal-footer">
 
           <button type="button" class="btn btn-secondary" (click)="submitNewDomainForm()">Generate Code</button>&nbsp;
           <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+
         </div>
+
           </form>
       </ng-template>
         <ul class="navbar-nav ml-auto">

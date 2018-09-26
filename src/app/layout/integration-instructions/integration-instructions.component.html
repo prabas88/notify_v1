@@ -1,0 +1,15 @@
+<h2>Select demo</h2>
+<select [(ngModel)]="selectedCity" (ngModelChange)="onChange($event)" >
+  <option *ngFor="let c of cities" [ngValue]="c"> {{c.name}} </option>
+</select>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">Copy & place following JS code before &lt;/head&gt; tag on all website pages</div>
+  <div class="panel-body">
+    Step -1 <br>
+    &lt;script src="{{scriptfile}}"&gt;&lt;/script&gt; <br>
+    Step -2 <br>
+    create firebase-messaging-sw.js in root directory of website.
+
+  </div>
+</div>
