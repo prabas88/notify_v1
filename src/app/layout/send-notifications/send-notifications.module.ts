@@ -4,13 +4,17 @@ import { SendNotificationsRoutingModule } from './send-notifications-routing.mod
 import { SendNotificationsComponent } from './send-notifications.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   imports: [
     CommonModule,
     SendNotificationsRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule.forRoot()
   ],
-  declarations: [SendNotificationsComponent]
+  declarations: [SendNotificationsComponent],
+  providers: [NgbActiveModal]
 })
 export class SendNotificationsModule { }
