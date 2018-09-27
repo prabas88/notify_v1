@@ -10,7 +10,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ApiService {
-  API_URL  =  'https://notification-216420.appspot.com';
+  API_URL  =  'https://notification-ui-app.appspot.com';
   constructor(private  httpClient:  HttpClient) {}
 
   register(registrationForm:any){

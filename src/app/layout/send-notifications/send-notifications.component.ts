@@ -11,6 +11,8 @@ import {ApiService} from '../../api.service';
 export class SendNotificationsComponent implements OnInit {
   notificationCreateForm: FormGroup;
   submitted = false;
+  isNotificationCreated=false;
+  createDescription:any='';
   constructor(private formBuilder: FormBuilder,private apiService:ApiService) {
     this.notificationCreateForm = this.formBuilder.group({
       title: ['', Validators.required],
@@ -32,7 +34,8 @@ export class SendNotificationsComponent implements OnInit {
     }
     console.log(JSON.stringify(this.notificationCreateForm.value));
     this.apiService.sendNewNotification(JSON.stringify(this.notificationCreateForm.value)).subscribe((data:  any) => {
-      console.log(data);
+      this.isNotificationCreated=true;
+      this.createDescription=data.description;
     });
   }
   get f() { return this.notificationCreateForm.controls; }
