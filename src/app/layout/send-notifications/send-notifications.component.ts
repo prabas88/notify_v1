@@ -13,7 +13,11 @@ export class SendNotificationsComponent implements OnInit {
   submitted = false;
   isNotificationCreated=false;
   createDescription:any='';
+   userInfoObj:any;
+  currentDomain:any;
   constructor(private formBuilder: FormBuilder,private apiService:ApiService) {
+     this.userInfoObj=JSON.parse(localStorage.getItem('userInfo'));
+     this.currentDomain=JSON.parse(localStorage.getItem('currentDomain'));
     this.notificationCreateForm = this.formBuilder.group({
       title: ['', Validators.required],
       body: ['', Validators.required],
@@ -33,7 +37,13 @@ export class SendNotificationsComponent implements OnInit {
       return;
     }
     console.log(JSON.stringify(this.notificationCreateForm.value));
-    this.apiService.sendNewNotification(JSON.stringify(this.notificationCreateForm.value)).subscribe((data:  any) => {
+    let notificationPayload:any={};
+    notificationPayload.userId=this.userInfoObj._id;
+    notificationPayload.domain=this.currentDomain.name;
+    notificationPayload.flag=0;
+    notificationPayload.message=this.notificationCreateForm.value;
+    console.log(notificationPayload);
+    this.apiService.sendNewNotification(JSON.stringify(notificationPayload)).subscribe((data:  any) => {
       this.isNotificationCreated=true;
       this.createDescription=data.description;
     });
