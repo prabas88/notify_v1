@@ -22,7 +22,43 @@ export class HeaderComponent implements OnInit {
     domainSessionObj:any={};
     userInfoObj:any;
     isNewDomainAdded=false;
-
+    profileList:any={};
+    loadProfileListData(){
+      let profileList=[];
+      let listObj:any={};
+      listObj["name"]="Profile";
+      listObj["id"]=0;
+      listObj["class"]="fa-user";
+      profileList.push(listObj);
+      listObj={};
+      listObj["name"]="Settings";
+      listObj["class"]="fa-gear";
+      listObj["id"]=1;
+      profileList.push(listObj);
+      listObj={};
+      listObj["name"]="Log Out";
+      listObj["class"]="fa-power-off";
+      listObj["id"]=2;
+      profileList.push(listObj);
+      return profileList;
+  }
+  onUserProfile(options:number){
+    switch(options) {
+      case 0:
+        console.log("Profile");
+        break;
+      case 1:
+        console.log("Settings");
+        break;
+      case 2:
+        console.log("Log Out");
+        this.onLoggedout();
+        this.router.navigate(['/login']);
+        break;
+      default:
+        console.log("No options specified!!");
+    }
+  }
     loadDomainsListData(_domainList,currentDomain){
       console.log("In:loadDomainsListData");
       console.log(_domainList);
@@ -51,8 +87,8 @@ export class HeaderComponent implements OnInit {
 
     constructor(private translate: TranslateService, public router: Router,private apiService:ApiService,
                 private formBuilder: FormBuilder,private modalService: NgbModal) {
+        this.profileList=this.loadProfileListData();
         this.userInfoObj=JSON.parse(localStorage.getItem('userInfo'));
-
         this.domainSessionObj={
           userId:this.userInfoObj._id
         };

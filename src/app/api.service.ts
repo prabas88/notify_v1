@@ -10,7 +10,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ApiService {
-  API_URL  =  'https://notification-ui-app.appspot.com';
+  API_URL  =  /*'https://notification-ui-app.appspot.com';*/'http://localhost:3000';
   constructor(private  httpClient:  HttpClient) {}
 
   register(registrationForm:any){
@@ -48,6 +48,10 @@ export class ApiService {
   sendNewNotification(createNotificationForm:any){
     console.log("in: addNewDomsendNewNotificationain");
     return  this.httpClient.post<any>(`${this.API_URL}/api/notification/sendnotification`,createNotificationForm,httpOptions);
+  }
+  addNotification(notificationForm:any){
+    console.log("in: addNotification");
+    return  this.httpClient.post<any>(`${this.API_URL}/api/notification/addnotification`,notificationForm,httpOptions);
   }
 
 }

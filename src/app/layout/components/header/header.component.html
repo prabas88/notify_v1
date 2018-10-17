@@ -1,23 +1,24 @@
-<nav class="navbar navbar-expand-lg fixed-top">
+<nav class="navbar navbar-expand-lg fixed-top-header">
 
     <div class="collapse navbar-collapse">
 
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item" ngbDropdown>
+            <li style="margin-left: -350px" class="nav-item" ngbDropdown>
               <select class="custom-select mr-sm-2"  [(ngModel)]="currentDomain" (ngModelChange)="onChangeDomain($event)">
                 <option *ngFor="let domain of userDomains" [ngValue]="domain" > {{domain.name}} </option>
               </select>
 
             </li>
+            <li><button class="rounded-btn" (click)="openDomainCreateForm(content)">+ Website</button></li>
             </ul>
 
-      <button class="btn btn-primary" (click)="openDomainCreateForm(content)">+ Add Website</button>
+
       <ng-template #content let-c="close" let-d="dismiss">
         <form [formGroup]="addNewDomainForm" >
-        <div class="modal-header">
-          <h4 class="modal-title">Add Website</h4>
+        <div class="modal-header fixed-gray-background-color">
+          <h4 class="modal-title fixed-white-font-color">Add Website</h4>
           <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">×</span>
+            <span aria-hidden="true" class="fixed-orange-font-color">×</span>
           </button>
         </div>
         <div class="modal-body">
@@ -37,10 +38,10 @@
               </ngb-alert>
             </p>
           </div>
-        <div class="modal-footer">
+        <div class="modal-footer fixed-gray-background-color">
 
-          <button type="button" class="btn btn-secondary" (click)="submitNewDomainForm()">Generate Code</button>&nbsp;
-          <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+          <button type="button" class="rounded-btn" (click)="submitNewDomainForm()">Add</button>&nbsp;
+          <button type="button" class="rounded-btn" (click)="c('Close click')">Close</button>
 
         </div>
 
@@ -48,7 +49,7 @@
       </ng-template>
         <ul class="navbar-nav ml-auto">
 
-
+            <!--
             <li class="nav-item dropdown" ngbDropdown>
                 <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
                     <i class="fa fa-language"></i> {{ 'Language' | translate }} <b class="caret"></b>
@@ -79,26 +80,32 @@
                         {{ 'Simplified Chinese' | translate }}
                     </a>
                 </div>
-            </li>
+            </li> -->
             <li class="nav-item dropdown" ngbDropdown>
                 <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
                     <i class="fa fa-user"></i> {{user_fullName}} <b class="caret"></b>
                 </a>
-                <div class="dropdown-menu-right" ngbDropdownMenu>
-                    <a class="dropdown-item" href="javascript:void(0)">
-                        <i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}
+                <div class="dropdown-menu-right fixed-gray-background-color" ngbDropdownMenu>
+                  <a *ngFor="let profile of profileList" class="dropdown-item fixed-orange-font-color"
+                     href="javascript:void(0)" (click)="onUserProfile(profile.id)">
+                    <i class="fa fa-fw {{profile.class}}"></i>{{ profile.name  }}
+                  </a>
+                  <!--  <a class="dropdown-item fixed-orange-font-color" href="javascript:void(0)">
+                        <i class="fa fa-fw fa-user"></i>{{ 'Profile' | translate }}
                     </a>
-                    <a class="dropdown-item" href="javascript:void(0)">
+                    <a class="dropdown-item fixed-orange-font-color" href="javascript:void(0)">
                         <i class="fa fa-fw fa-envelope"></i> {{ 'Inbox' | translate }}
                     </a>
-                    <a class="dropdown-item" href="javascript:void(0)">
+                    <a class="dropdown-item fixed-orange-font-color" href="javascript:void(0)">
                         <i class="fa fa-fw fa-gear"></i> {{ 'Settings' | translate }}
                     </a>
-                    <a class="dropdown-item" [routerLink]="['/login']" (click)="onLoggedout()">
+                    <a class="dropdown-item fixed-orange-font-color" [routerLink]="['/login']" (click)="onLoggedout()">
                         <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
                     </a>
+                -->
+
                 </div>
-            </li>
+             </li>
         </ul>
     </div>
 </nav>

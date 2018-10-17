@@ -9,9 +9,9 @@ $topnav-background-color: #222;
     right: 0;
     bottom: 0;
     overflow: auto;
-    background: #fff;
+    background: #535353;
     text-align: center;
-    color: #222;
+    color: #ff5c00;
     padding: 3em;
     .col-lg-4 {
         padding: 0;
@@ -28,7 +28,7 @@ $topnav-background-color: #222;
         border: none;
         box-shadow: none;
         border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-        color: #222;
+        color: #ff5c00;
         border-radius: 0;
     }
     .input-underline:focus {
@@ -39,7 +39,7 @@ $topnav-background-color: #222;
         -webkit-border-radius: 50px;
         border-radius: 50px;
         color: rgba(255, 255, 255, 0.8);
-        background: #FFC300 ;
+        background: #ff5c00 ;
         border: 2px solid rgba(255, 255, 255, 0.8);
         font-size: 18px;
         line-height: 40px;
